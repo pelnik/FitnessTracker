@@ -196,8 +196,8 @@ rebuildDB()
   .catch(console.error)
   .finally(() => client.end());
 
-// module.exports = {
-//   rebuildDB,
-//   dropTables,
-//   createTables,
-// }
+module.exports = {
+  rebuildDB,
+  dropTables,
+  createTables,
+}
