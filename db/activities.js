@@ -33,15 +33,10 @@ async function updateActivity({ id, ...fields }) {
 
 
 
-
-
-
-
 module.exports = {
   getAllActivities,
   getActivityById,
   getActivityByName,
-  attachActivitiesToRoutines,
   createActivity,
   updateActivity,
 }

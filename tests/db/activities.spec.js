@@ -16,8 +16,8 @@ const {
   getActivityByName,
 } = require("../../db");
 
-describe("DB Activities", () => {
-  describe("createActivity({ name, description })", () => {
+xdescribe("DB Activities", () => {
+  xdescribe("createActivity({ name, description })", () => {
     it("Creates and returns the new activity (object)", async () => {
       const activityToCreate = {
         name: "Marathon",
@@ -30,9 +30,11 @@ describe("DB Activities", () => {
     });
   });
 
-  describe("getAllActivities()", () => {
+  xdescribe("getAllActivities()", () => {
     it("selects and returns an array of all activities", async () => {
-      await createActivity("Sit ups", "Do 100 reps");
+      const activityToCreate = { name: "Sit ups", description: "Do 100 reps" };
+
+      await createActivity(activityToCreate);
       const activities = await getAllActivities();
       const { rows: activitiesFromDatabase } = await client.query(`
         SELECT * FROM activities;
@@ -41,17 +43,22 @@ describe("DB Activities", () => {
     });
   });
 
-  describe("getActivityByName(activityName)", () => {
+  xdescribe("getActivityByName(activityName)", () => {
     it("gets an activity by it's name", async () => {
-      const fakeActivity = await createActivity("Power Walking", "At the mall");
+      const activityToCreate = {
+        name: "Power Walking",
+        description: "At the mall",
+      };
+      const fakeActivity = await createActivity(activityToCreate);
       const activity = await getActivityByName(fakeActivity.name);
       expect(activity.id).toEqual(fakeActivity.id);
     });
   });
 
-  describe("getActivityById(activityId)", () => {
+  xdescribe("getActivityById(activityId)", () => {
     it("gets activities by their id", async () => {
-      const fakeActivity = await createActivity("Crunches", "Do 40 reps");
+      const activityToCreate = { name: "Crunches", description: "Do 40 reps" };
+      const fakeActivity = await createActivity(activityToCreate);
 
       const activity = await getActivityById(fakeActivity.id);
 
@@ -61,9 +68,14 @@ describe("DB Activities", () => {
     });
   });
 
-  describe("updateActivity", () => {
+  xdescribe("updateActivity", () => {
     it("Updates name without affecting the ID. Returns the updated Activity.", async () => {
-      const fakeActivity = await createActivity("Baseball", "Run the bases");
+      const activityToCreate = {
+        name: "Baseball",
+        description: "Run the bases",
+      };
+
+      const fakeActivity = await createActivity(activityToCreate);
       const name = "Softball";
       const updatedActivity = await updateActivity({
         id: fakeActivity.id,
@@ -75,7 +87,9 @@ describe("DB Activities", () => {
     });
 
     it("Updates description without affecting the ID. Returns the updated Activity.", async () => {
-      const fakeActivity = await createActivity("Soccer", "After school");
+      const activityToCreate = { name: "Soccer", description: "After school" };
+
+      const fakeActivity = await createActivity(activityToCreate);
       const description = "Football is life!";
       const updatedActivity = await updateActivity({
         id: fakeActivity.id,
@@ -87,7 +101,12 @@ describe("DB Activities", () => {
     });
 
     it("can update name and description without affecting the ID. Returns the updated Activity", async () => {
-      const fakeActivity = await createActivity("Football", "so very boring");
+      const activityToCreate = {
+        name: "Football",
+        description: "so very boring",
+      };
+
+      const fakeActivity = await createActivity(activityToCreate);
       const description = "Way better than football!";
       const name = "Rugby";
       const updatedActivity = await updateActivity({
