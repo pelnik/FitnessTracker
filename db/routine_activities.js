@@ -24,6 +24,13 @@ async function destroyRoutineActivity(id) {
 async function canEditRoutineActivity(routineActivityId, userId) {
 }
 
+
+// maybe? 
+// select and return an array of all activities
+async function attachActivitiesToRoutines(routinesArray) {
+}
+
+
 module.exports = {
   getRoutineActivityById,
   addActivityToRoutine,

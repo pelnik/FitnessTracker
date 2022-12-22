@@ -14,10 +14,12 @@ async function getAllActivities() {
 
 }
 
+// this function should return a single activity (object) from the database that matches the name that is passed in as an argument. 
 async function getActivityByName(name) {
 
 }
 
+// this function should return a single activity (object) from the database that matches the id that is passed in as an argument.
 async function getActivityById(id) {
   
 }
@@ -29,9 +31,6 @@ async function updateActivity({ id, ...fields }) {
 
 }
 
-// select and return an array of all activities
-async function attachActivitiesToRoutines(routinesArray) {
-}
 
 
 
