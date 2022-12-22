@@ -8,7 +8,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const client = require("../../db/client");
 
-const { getUserById, createUser, getUser } = require("../../db");
+const {  createUser,  getUserByUsername, getUser, getUserById } = require("../../db");
 
 describe("DB Users", () => {
   describe("createUser({ username, password })", () => {
