@@ -135,4 +135,27 @@ describe("DB Users", () => {
       expect(user.password).toBeFalsy();
     });
   });
+
+  describe("getUserById(userId)", () => {
+    it("returns the user object where it matches the passed in user id", async () => {
+      const fakeUserData = {
+        username: "Sarah",
+        password: "poiuytfvbnm",
+      };
+
+      const user = await getUserById(fakeUserData.id);
+      expect(user).toBeTruthy();
+      expect(user.id).toBe(fakeUserData.id);
+    });
+
+    it("does not return the password", async () => {
+      const fakeUserData = {
+        username: "Jonathan",
+        password: "wertyhjkkjh",
+      };
+
+      const user = await getUserById(fakeUserData.id);
+      expect(user.password).toBeFalsy();
+    });
+  });
 });
