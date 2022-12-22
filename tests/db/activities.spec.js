@@ -100,11 +100,4 @@ describe("DB Activities", () => {
       expect(updatedActivity.description).toEqual(description);
     });
   });
-
-  describe("attachActivitiesToRoutines()", () => {
-    it("", async () => {
-      
-    });
-  });
-
 });

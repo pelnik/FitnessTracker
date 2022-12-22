@@ -30,7 +30,7 @@ async function updateActivity({ id, ...fields }) {
 }
 
 // select and return an array of all activities
-async function attachActivitiesToRoutines(routines) {
+async function attachActivitiesToRoutines(routinesArray) {
 }
 
 
