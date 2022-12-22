@@ -142,10 +142,11 @@ describe("DB Users", () => {
         username: "Sarah",
         password: "poiuytfvbnm",
       };
+      const newUser = await createUser(fakeUserData);
 
-      const user = await getUserById(fakeUserData.id);
+      const user = await getUserById(newUser.id);
       expect(user).toBeTruthy();
-      expect(user.id).toBe(fakeUserData.id);
+      expect(user.id).toBe(newUser.id);
     });
 
     it("does not return the password", async () => {
@@ -154,7 +155,9 @@ describe("DB Users", () => {
         password: "wertyhjkkjh",
       };
 
-      const user = await getUserById(fakeUserData.id);
+      const newUser = await createUser(fakeUserData);
+
+      const user = await getUserById(newUser.id);
       expect(user.password).toBeFalsy();
     });
   });
