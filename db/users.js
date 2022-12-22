@@ -7,6 +7,10 @@ async function createUser({ username, password }) {
   
 }
 
+async function getUserByUsername(userName) {
+
+}
+
 async function getUser({ username, password }) {
 
 }
@@ -15,9 +19,7 @@ async function getUserById(userId) {
 
 }
 
-async function getUserByUsername(userName) {
 
-}
 
 module.exports = {
   createUser,

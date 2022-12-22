@@ -4,23 +4,18 @@ DO NOT CHANGE THIS FILE
 
 */
 
-require("dotenv").config()
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const client = require("../../db/client");
 
-const {
-  getUserById,
-  createUser,
-  getUser,
-} = require("../../db");
+const { getUserById, createUser, getUser } = require("../../db");
 
-describe("DB Users", ()=>{
+describe("DB Users", () => {
   describe("createUser({ username, password })", () => {
-
     it("Creates the user", async () => {
       const fakeUserData = {
         username: "Horace",
-        password: '12345678',
+        password: "12345678",
       };
 
       const user = await createUser(fakeUserData);
@@ -31,7 +26,7 @@ describe("DB Users", ()=>{
     it("Does NOT return the password", async () => {
       const fakeUserData = {
         username: "HoraceTheSecond",
-        password: '12345678',
+        password: "12345678",
       };
       const user = await createUser(fakeUserData);
       expect(user.password).toBeFalsy();
@@ -53,7 +48,9 @@ describe("DB Users", ()=>{
       };
       const user = await createUser(fakeUserData);
 
-      const { rows: [queriedUser] } = await client.query(
+      const {
+        rows: [queriedUser],
+      } = await client.query(
         `
         SELECT * from users
         WHERE id = $1
@@ -68,21 +65,63 @@ describe("DB Users", ()=>{
       expect(hashedVersion).toBe(true);
     });
 
-    describe("getUser({ username, password })", () => {
+    describe("getUserByUsername(username)", () => {
+      it("returns the user object if the username exists in the database", async () => {
+        const fakeUserData = {
+          username: "Bob",
+          password: "cvbnmjbgtr",
+        };
 
+        await createUser(fakeUserData);
+
+        const user = await getUserByUsername(fakeUserData.username);
+
+        expect(user).toBeTruthy();
+        expect(user.username).toBe(fakeUserData.username);
+      });
+
+      it("Does not return the user object if the username is not present in the database", async () => {
+        const fakeUserData = {
+          username: "Pete",
+          password: "ertycvbnmkjhgfds",
+        };
+
+        await createUser(fakeUserData);
+
+        const user = await getUserByUsername("Mary");
+
+        expect(user).toBeFalsy();
+      });
+
+      it("Does NOT return the password", async () => {
+        const fakeUserData = {
+          username: "Rhynn",
+          password: "bvxsertyjkj",
+        };
+
+        await createUser(fakeUserData);
+        const user = await getUserByUsername(fakeUserData.username);
+
+        expect(user).toBeTruthy();
+        expect(user.username).toBe(fakeUserData.username);
+        expect(user.password).toBeFalsy();
+      });
+    });
+
+    describe("getUser({ username, password })", () => {
       it("returns the user when the password verifies", async () => {
         const fakeUserData = {
           username: "Nicole",
           password: "6ygfe6ijbgtr",
         };
-       await createUser(fakeUserData);
+        await createUser(fakeUserData);
 
-       const user = await getUser(fakeUserData);
-  
+        const user = await getUser(fakeUserData);
+
         expect(user).toBeTruthy();
-        expect(newUser.username).toBe(fakeUserData.username);
+        expect(user.username).toBe(fakeUserData.username);
       });
-  
+
       it("Does not return the user if the password doesn't verify", async () => {
         const fakeUserData = {
           username: "Issac",
@@ -90,31 +129,24 @@ describe("DB Users", ()=>{
         };
 
         await createUser(fakeUserData);
-  
+
         const user = await getUser({
           username: "Issac",
-          password: "Bad Password"
+          password: "Bad Password",
         });
-  
+
         expect(user).toBeFalsy();
       });
-  
+
       it("Does NOT return the password", async () => {
         const fakeUserData = {
           username: "Michael",
-          password: 'jhtdxcvbnm',
+          password: "jhtdxcvbnm",
         };
         await createUser(fakeUserData);
         const user = await getUser(fakeUserData);
         expect(user.password).toBeFalsy();
       });
     });
-
-
-
-
-
-
   });
-})
-
+});
