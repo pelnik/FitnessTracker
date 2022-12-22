@@ -67,6 +67,54 @@ describe("DB Users", ()=>{
       );
       expect(hashedVersion).toBe(true);
     });
+
+    describe("getUser({ username, password })", () => {
+
+      it("returns the user when the password verifies", async () => {
+        const fakeUserData = {
+          username: "Nicole",
+          password: "6ygfe6ijbgtr",
+        };
+       await createUser(fakeUserData);
+
+       const user = await getUser(fakeUserData);
+  
+        expect(user).toBeTruthy();
+        expect(newUser.username).toBe(fakeUserData.username);
+      });
+  
+      it("Does not return the user if the password doesn't verify", async () => {
+        const fakeUserData = {
+          username: "Issac",
+          password: "ertyuiokjhgfds",
+        };
+
+        await createUser(fakeUserData);
+  
+        const user = await getUser({
+          username: "Issac",
+          password: "Bad Password"
+        });
+  
+        expect(user).toBeFalsy();
+      });
+  
+      it("Does NOT return the password", async () => {
+        const fakeUserData = {
+          username: "Michael",
+          password: 'jhtdxcvbnm',
+        };
+        await createUser(fakeUserData);
+        const user = await getUser(fakeUserData);
+        expect(user.password).toBeFalsy();
+      });
+    });
+
+
+
+
+
+
   });
 })
 
