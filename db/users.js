@@ -7,7 +7,7 @@ async function createUser({ username, password }) {
   
 }
 
-async function getUserByUsername(userName) {
+async function getUserByUsernameWithPassword(userName) {
 
 }
 
@@ -25,5 +25,5 @@ module.exports = {
   createUser,
   getUser,
   getUserById,
-  getUserByUsername,
+  getUserByUsernameWithPassword,
 }

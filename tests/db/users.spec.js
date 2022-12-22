@@ -8,7 +8,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const client = require("../../db/client");
 
-const {  createUser,  getUserByUsername, getUser, getUserById } = require("../../db");
+const {  createUser,  getUserByUsernameWithPassword, getUser, getUserById } = require("../../db");
 
 describe("DB Users", () => {
   describe("createUser({ username, password })", () => {
@@ -65,7 +65,7 @@ describe("DB Users", () => {
       expect(hashedVersion).toBe(true);
     });
 
-    describe("getUserByUsername(username)", () => {
+    describe("getUserByUsernameWithPassword(username)", () => {
       it("returns the user object if the username exists in the database", async () => {
         const fakeUserData = {
           username: "Bob",
@@ -74,7 +74,7 @@ describe("DB Users", () => {
 
         await createUser(fakeUserData);
 
-        const user = await getUserByUsername(fakeUserData.username);
+        const user = await getUserByUsernameWithPassword(fakeUserData.username);
 
         expect(user).toBeTruthy();
         expect(user.username).toBe(fakeUserData.username);
@@ -88,23 +88,9 @@ describe("DB Users", () => {
 
         await createUser(fakeUserData);
 
-        const user = await getUserByUsername("Mary");
+        const user = await getUserByUsernameWithPassword("Mary");
 
         expect(user).toBeFalsy();
-      });
-
-      it("Does NOT return the password", async () => {
-        const fakeUserData = {
-          username: "Rhynn",
-          password: "bvxsertyjkj",
-        };
-
-        await createUser(fakeUserData);
-        const user = await getUserByUsername(fakeUserData.username);
-
-        expect(user).toBeTruthy();
-        expect(user.username).toBe(fakeUserData.username);
-        expect(user.password).toBeFalsy();
       });
     });
 
