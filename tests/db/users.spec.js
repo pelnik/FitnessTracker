@@ -32,7 +32,7 @@ describe("DB Users", () => {
       expect(user.password).toBeFalsy();
     });
 
-    it("EXTRA CREDIT: Does not store plaintext password in the database", async () => {
+    xit("EXTRA CREDIT: Does not store plaintext password in the database", async () => {
       const fakeUserData = {
         username: "Harry",
         password: "superSecretPassword",
@@ -41,7 +41,7 @@ describe("DB Users", () => {
       expect(user.password).not.toBe(fakeUserData.password);
     });
 
-    it("EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database", async () => {
+    xit("EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database", async () => {
       const fakeUserData = {
         username: "Nicky",
         password: "extraSuperSecretPassword",
@@ -66,7 +66,7 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUserByUsernameWithPassword(username)", () => {
+  xdescribe("getUserByUsernameWithPassword(username)", () => {
     it("returns the user object if the username exists in the database", async () => {
       const fakeUserData = {
         username: "Bob",
@@ -95,7 +95,7 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUser({ username, password })", () => {
+  xdescribe("getUser({ username, password })", () => {
     it("returns the user when the password verifies", async () => {
       const fakeUserData = {
         username: "Nicole",
@@ -136,7 +136,7 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUserById(userId)", () => {
+  xdescribe("getUserById(userId)", () => {
     it("returns the user object where it matches the passed in user id", async () => {
       const fakeUserData = {
         username: "Sarah",
