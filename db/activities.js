@@ -1,7 +1,20 @@
 const client = require("./client")
 
 // database functions
+
+// create and return the new activity
+// ** this function needs to be completed first because other tests rely on it. 
+async function createActivity({ name, description }) {
+
+}
+
+
+// this function returns an array of all of the activities
 async function getAllActivities() {
+
+}
+
+async function getActivityByName(name) {
 
 }
 
@@ -9,7 +22,10 @@ async function getActivityById(id) {
   
 }
 
-async function getActivityByName(name) {
+// The Id should not get changed
+// You should be able to update the name, or the description, or name & description. 
+// return the updated activity
+async function updateActivity({ id, ...fields }) {
 
 }
 
@@ -17,17 +33,9 @@ async function getActivityByName(name) {
 async function attachActivitiesToRoutines(routines) {
 }
 
-// return the new activity
-async function createActivity({ name, description }) {
 
-}
 
-// don't try to update the id
-// do update the name and description
-// return the updated activity
-async function updateActivity({ id, ...fields }) {
 
-}
 
 
 module.exports = {

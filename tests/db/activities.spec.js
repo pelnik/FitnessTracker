@@ -4,9 +4,9 @@ DO NOT CHANGE THIS FILE
 
 */
 
-require("dotenv").config()
+require("dotenv").config();
 
-const client = require('../../db/client');
+const client = require("../../db/client");
 
 const {
   getAllActivities,
@@ -23,25 +23,88 @@ describe("DB Activities", () => {
         name: "Marathon",
         description: "Run all the miles",
       };
-      const createdActivity = await createActivity(activityToCreate);
+      const fakeActivity = await createActivity(activityToCreate);
 
-      expect(createdActivity.name).toBe(activityToCreate.name);
-      expect(createdActivity.description).toBe(activityToCreate.description);
+      expect(fakeActivity.name).toBe(activityToCreate.name);
+      expect(fakeActivity.description).toBe(activityToCreate.description);
     });
   });
 
+  describe("getAllActivities()", () => {
+    it("selects and returns an array of all activities", async () => {
+      await createActivity("Sit ups", "Do 100 reps");
+      const activities = await getAllActivities();
+      const { rows: activitiesFromDatabase } = await client.query(`
+        SELECT * FROM activities;
+      `);
+      expect(activities).toEqual(activitiesFromDatabase);
+    });
+  });
 
+  describe("getActivityByName(activityName)", () => {
+    it("gets an activity by it's name", async () => {
+      const fakeActivity = await createActivity("Power Walking", "At the mall");
+      const activity = await getActivityByName(fakeActivity.name);
+      expect(activity.id).toEqual(fakeActivity.id);
+    });
+  });
 
-  // describe("getAllActivities()", () => {
-  //   // it("selects and returns an array of all activities", async () => {
-  //   //   await createFakeActivity("Sit ups", "Do 100 reps");
-  //   //   const activities = await getAllActivities();
-  //   //   const { rows: activitiesFromDatabase } = await client.query(`
-  //   //     SELECT * FROM activities;
-  //   //   `);
-  //   //   expect(activities).toEqual(activitiesFromDatabase);
-  //   // });
-  // });
+  describe("getActivityById(activityId)", () => {
+    it("gets activities by their id", async () => {
+      const fakeActivity = await createActivity("Crunches", "Do 40 reps");
 
+      const activity = await getActivityById(fakeActivity.id);
 
-})
+      expect(activity.id).toEqual(fakeActivity.id);
+      expect(activity.name).toEqual(fakeActivity.name);
+      expect(activity.description).toEqual(fakeActivity.description);
+    });
+  });
+
+  describe("updateActivity", () => {
+    it("Updates name without affecting the ID. Returns the updated Activity.", async () => {
+      const fakeActivity = await createActivity("Baseball", "Run the bases");
+      const name = "Softball";
+      const updatedActivity = await updateActivity({
+        id: fakeActivity.id,
+        name,
+      });
+      expect(updatedActivity.id).toEqual(fakeActivity.id);
+      expect(updatedActivity.name).toEqual(name);
+      expect(updatedActivity.description).toEqual(fakeActivity.description);
+    });
+
+    it("Updates description without affecting the ID. Returns the updated Activity.", async () => {
+      const fakeActivity = await createActivity("Soccer", "After school");
+      const description = "Football is life!";
+      const updatedActivity = await updateActivity({
+        id: fakeActivity.id,
+        description,
+      });
+      expect(updatedActivity.id).toEqual(fakeActivity.id);
+      expect(updatedActivity.name).toEqual(fakeActivity.name);
+      expect(updatedActivity.description).toEqual(description);
+    });
+
+    it("can update name and description without affecting the ID. Returns the updated Activity", async () => {
+      const fakeActivity = await createActivity("Football", "so very boring");
+      const description = "Way better than football!";
+      const name = "Rugby";
+      const updatedActivity = await updateActivity({
+        id: fakeActivity.id,
+        description,
+        name,
+      });
+      expect(updatedActivity.id).toEqual(fakeActivity.id);
+      expect(updatedActivity.name).toEqual(name);
+      expect(updatedActivity.description).toEqual(description);
+    });
+  });
+
+  describe("attachActivitiesToRoutines()", () => {
+    it("", async () => {
+      
+    });
+  });
+
+});
