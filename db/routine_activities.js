@@ -1,11 +1,16 @@
 const client = require("./client");
 
+
+// Work on addActivityToRoutine THIRD, then work on routines.js
+
 async function addActivityToRoutine({
   routineId,
   activityId,
   count,
   duration,
 }) {}
+
+// Work on the remainder of this file FIFTH
 
 async function getRoutineActivityById(id) {}
 

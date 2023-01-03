@@ -1,8 +1,10 @@
 const client = require("./client")
 
-// database functions
+// Work on this file SECOND
 
-// create and return the new activity
+// activities functions
+
+// create and returns the new activity
 // ** this function needs to be completed first because other tests rely on it. 
 async function createActivity({ name, description }) {
 
