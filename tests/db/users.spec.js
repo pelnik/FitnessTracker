@@ -66,8 +66,8 @@ describe("DB Users", () => {
     });
   });
 
-  xdescribe("getUserByUsernameWithPassword(username)", () => {
-    it("returns the user object if the username exists in the database", async () => {
+  describe("getUserByUsernameWithPassword(username)", () => {
+    xit("returns the user object if the username exists in the database", async () => {
       const fakeUserData = {
         username: "Bob",
         password: "cvbnmjbgtr",
@@ -81,7 +81,7 @@ describe("DB Users", () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    it("Does not return the user object if the username is not present in the database", async () => {
+    xit("Does not return the user object if the username is not present in the database", async () => {
       const fakeUserData = {
         username: "Pete",
         password: "ertycvbnmkjhgfds",
@@ -95,8 +95,8 @@ describe("DB Users", () => {
     });
   });
 
-  xdescribe("getUser({ username, password })", () => {
-    it("returns the user when the password verifies", async () => {
+  describe("getUser({ username, password })", () => {
+    xit("returns the user when the password verifies", async () => {
       const fakeUserData = {
         username: "Nicole",
         password: "6ygfe6ijbgtr",
@@ -109,7 +109,7 @@ describe("DB Users", () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    it("Does not return the user if the password doesn't verify", async () => {
+    xit("Does not return the user if the password doesn't verify", async () => {
       const fakeUserData = {
         username: "Issac",
         password: "ertyuiokjhgfds",
@@ -125,7 +125,7 @@ describe("DB Users", () => {
       expect(user).toBeFalsy();
     });
 
-    it("Does NOT return the password", async () => {
+    xit("Does NOT return the password", async () => {
       const fakeUserData = {
         username: "Michael",
         password: "jhtdxcvbnm",
@@ -136,8 +136,8 @@ describe("DB Users", () => {
     });
   });
 
-  xdescribe("getUserById(userId)", () => {
-    it("returns the user object where it matches the passed in user id", async () => {
+  describe("getUserById(userId)", () => {
+    xit("returns the user object where xit matches the passed in user id", async () => {
       const fakeUserData = {
         username: "Sarah",
         password: "poiuytfvbnm",
@@ -149,7 +149,7 @@ describe("DB Users", () => {
       expect(user.id).toBe(newUser.id);
     });
 
-    it("does not return the password", async () => {
+    xit("does not return the password", async () => {
       const fakeUserData = {
         username: "Jonathan",
         password: "wertyhjkkjh",
