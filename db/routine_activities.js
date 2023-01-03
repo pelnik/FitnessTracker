@@ -1,35 +1,21 @@
-const client = require('./client')
-
-async function getRoutineActivityById(id){
-}
+const client = require("./client");
 
 async function addActivityToRoutine({
   routineId,
   activityId,
   count,
   duration,
-}) {
-    
-}
+}) {}
 
-async function getRoutineActivitiesByRoutine({id}) {
-}
+async function getRoutineActivityById(id) {}
 
-async function updateRoutineActivity ({id, ...fields}) {
-}
+async function getRoutineActivitiesByRoutine({ id }) {}
 
-async function destroyRoutineActivity(id) {
-}
+async function updateRoutineActivity({ id, ...fields }) {}
 
-async function canEditRoutineActivity(routineActivityId, userId) {
-}
+async function destroyRoutineActivity(id) {}
 
-
-// maybe? 
-// select and return an array of all activities
-async function attachActivitiesToRoutines(routinesArray) {
-}
-
+async function canEditRoutineActivity(routineActivityId, userId) {}
 
 module.exports = {
   getRoutineActivityById,
