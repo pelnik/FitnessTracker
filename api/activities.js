@@ -1,9 +1,9 @@
 const express = require('express');
 const activitiesRouter = express.Router();
 
-// GET /api/activities/:activityId/routines
-
 // GET /api/activities
+
+// GET /api/activities/:activityId/routines
 
 // POST /api/activities
 
