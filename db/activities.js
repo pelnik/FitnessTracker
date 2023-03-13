@@ -7,37 +7,105 @@ const client = require("./client")
 // create and returns the new activity
 // ** this function needs to be completed first because other tests rely on it. 
 async function createActivity({ name, description }) {
-
+  try {
+    const { rows: [activity], } = await client.query(
+      `
+      INSERT INTO activities(name, description)
+      VALUES($1, $2)
+      ON CONFLICT (name) DO NOTHING
+      RETURNING *;
+      `,
+      [name, description]
+    )
+    
+    return activity
+  } catch (error) {
+    console.error('error creating activity');
+    throw error;
+  }
 }
-
 
 
 // this function returns an array of all of the activities
 async function getAllActivities() {
+try {
+  const { rows } = await client.query(
+    `
+    SELECT *
+    FROM activities
+  `)
 
+  return rows
+} catch (error) {
+  console.error('error getting all activities');
+  throw error;
+}
 }
 
 
-
-// this function should return a single activity (object) from the database that matches the name that is passed in as an argument. 
+// this function should return a single activity (object) from the database that 
+//matches the name that is passed in as an argument. 
 async function getActivityByName(name) {
+try {
+  const{ rows: [activities] } = await client.query(
+    `
+    SELECT *
+    FROM activities
+    WHERE name = $1;
+  `,[name]);
 
+  return activities
+} catch (error) {
+  console.error('error getting activity by name');
+  throw error
 }
-
+}
 
 
 // this function should return a single activity (object) from the database that matches the id that is passed in as an argument.
 async function getActivityById(id) {
-  
+  try {
+    const { rows: [activities] } = await client.query(
+    `
+      SELECT *
+      FROM activities
+      WHERE id = $1;
+    `,
+    [id]);
+
+    return activities
+  } catch (error) {
+    console.error('error getting activity by id');
+    throw error;
+  }
 }
-
-
 
 // The id should not be changed
 // You should be able to update the name, or the description, or name & description. 
 // return the updated activity
-async function updateActivity({ id, ...fields }) {
+async function updateActivity( fields = {}) {
+const id = fields.id
+delete fields.id
+const setString = Object.keys(fields)
+  .map((key, index) => `"${key}" = $${index + 1}`)
+  .join(", ")
 
+try {
+  const { rows: [activities] } = await client.query(
+    `
+    UPDATE activities
+    SET ${setString}
+    WHERE id = ${id}
+    RETURNING *;
+    `,
+    Object.values(fields)
+  ) ;
+
+  return activities
+} catch (error) {
+  console.error('error updating activities');
+  throw error;
+}
 }
 
 
