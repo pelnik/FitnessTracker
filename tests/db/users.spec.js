@@ -4,18 +4,23 @@ DO NOT CHANGE THIS FILE
 
 */
 
-require("dotenv").config();
-const bcrypt = require("bcrypt");
-const client = require("../../db/client");
+require('dotenv').config();
+const bcrypt = require('bcrypt');
+const client = require('../../db/client');
 
-const { createUser,  getUserByUsernameWithPassword, getUser, getUserById} = require("../../db");
+const {
+  createUser,
+  getUserByUsernameWithPassword,
+  getUser,
+  getUserById,
+} = require('../../db');
 
-describe("DB Users", () => {
-  describe("createUser({ username, password })", () => {
-    it("Creates the user", async () => {
+describe('DB Users', () => {
+  describe('createUser({ username, password })', () => {
+    it('Creates the user', async () => {
       const fakeUserData = {
-        username: "Horace",
-        password: "12345678",
+        username: 'Horace',
+        password: '12345678',
       };
 
       const user = await createUser(fakeUserData);
@@ -23,28 +28,28 @@ describe("DB Users", () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    it("Does NOT return the password", async () => {
+    it('Does NOT return the password', async () => {
       const fakeUserData = {
-        username: "HoraceTheSecond",
-        password: "12345678",
+        username: 'HoraceTheSecond',
+        password: '12345678',
       };
       const user = await createUser(fakeUserData);
       expect(user.password).toBeFalsy();
     });
 
-    xit("EXTRA CREDIT: Does not store plaintext password in the database", async () => {
+    it('EXTRA CREDIT: Does not store plaintext password in the database', async () => {
       const fakeUserData = {
-        username: "Harry",
-        password: "superSecretPassword",
+        username: 'Harry',
+        password: 'superSecretPassword',
       };
       const user = await createUser(fakeUserData);
       expect(user.password).not.toBe(fakeUserData.password);
     });
 
-    xit("EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database", async () => {
+    it('EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database', async () => {
       const fakeUserData = {
-        username: "Nicky",
-        password: "extraSuperSecretPassword",
+        username: 'Nicky',
+        password: 'extraSuperSecretPassword',
       };
       const user = await createUser(fakeUserData);
 
@@ -66,11 +71,11 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUserByUsernameWithPassword(username)", () => {
-    xit("returns the user object if the username exists in the database", async () => {
+  describe('getUserByUsernameWithPassword(username)', () => {
+    xit('returns the user object if the username exists in the database', async () => {
       const fakeUserData = {
-        username: "Bob",
-        password: "cvbnmjbgtr",
+        username: 'Bob',
+        password: 'cvbnmjbgtr',
       };
 
       await createUser(fakeUserData);
@@ -81,25 +86,25 @@ describe("DB Users", () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    xit("Does not return the user object if the username is not present in the database", async () => {
+    xit('Does not return the user object if the username is not present in the database', async () => {
       const fakeUserData = {
-        username: "Pete",
-        password: "ertycvbnmkjhgfds",
+        username: 'Pete',
+        password: 'ertycvbnmkjhgfds',
       };
 
       await createUser(fakeUserData);
 
-      const user = await getUserByUsernameWithPassword("Mary");
+      const user = await getUserByUsernameWithPassword('Mary');
 
       expect(user).toBeFalsy();
     });
   });
 
-  describe("getUser({ username, password })", () => {
-    xit("returns the user when the password verifies", async () => {
+  describe('getUser({ username, password })', () => {
+    xit('returns the user when the password verifies', async () => {
       const fakeUserData = {
-        username: "Nicole",
-        password: "6ygfe6ijbgtr",
+        username: 'Nicole',
+        password: '6ygfe6ijbgtr',
       };
       await createUser(fakeUserData);
 
@@ -111,24 +116,24 @@ describe("DB Users", () => {
 
     xit("Does not return the user if the password doesn't verify", async () => {
       const fakeUserData = {
-        username: "Issac",
-        password: "ertyuiokjhgfds",
+        username: 'Issac',
+        password: 'ertyuiokjhgfds',
       };
 
       await createUser(fakeUserData);
 
       const user = await getUser({
-        username: "Issac",
-        password: "Bad Password",
+        username: 'Issac',
+        password: 'Bad Password',
       });
 
       expect(user).toBeFalsy();
     });
 
-    xit("Does NOT return the password", async () => {
+    xit('Does NOT return the password', async () => {
       const fakeUserData = {
-        username: "Michael",
-        password: "jhtdxcvbnm",
+        username: 'Michael',
+        password: 'jhtdxcvbnm',
       };
       await createUser(fakeUserData);
       const user = await getUser(fakeUserData);
@@ -136,11 +141,11 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUserById(userId)", () => {
-    xit("returns the user object where xit matches the passed in user id", async () => {
+  describe('getUserById(userId)', () => {
+    xit('returns the user object where xit matches the passed in user id', async () => {
       const fakeUserData = {
-        username: "Sarah",
-        password: "poiuytfvbnm",
+        username: 'Sarah',
+        password: 'poiuytfvbnm',
       };
       const newUser = await createUser(fakeUserData);
 
@@ -149,10 +154,10 @@ describe("DB Users", () => {
       expect(user.id).toBe(newUser.id);
     });
 
-    xit("does not return the password", async () => {
+    xit('does not return the password', async () => {
       const fakeUserData = {
-        username: "Jonathan",
-        password: "wertyhjkkjh",
+        username: 'Jonathan',
+        password: 'wertyhjkkjh',
       };
 
       const newUser = await createUser(fakeUserData);

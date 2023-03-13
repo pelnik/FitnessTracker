@@ -1,5 +1,7 @@
 const client = require('./client');
 
+const bcrypt = require('bcrypt');
+
 // Work on this file FIRST
 
 // user functions
@@ -9,6 +11,26 @@ const client = require('./client');
 async function createUser({ username, password }) {
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      INSERT INTO users(username, password)
+      VALUES($1, $2)
+      ON CONFLICT (username) DO NOTHING
+      RETURNING id, username;
+    `,
+      [username, hashedPassword]
+    );
+
+    console.log(user);
+    return user;
+  } catch (error) {
+    console.error('error creating user');
+    throw error;
+  }
 }
 
 // this function should return a single user (object) from the database that matches the userName that is passed in as an argument.
