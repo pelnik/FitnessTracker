@@ -11,10 +11,6 @@ async function addActivityToRoutine({
   duration,
 }) {
   try {
-    console.log('message', routineId,
-    activityId,
-    count,
-    duration)
     const {
       rows: [routine_activity],
     } = await client.query(

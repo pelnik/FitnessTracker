@@ -1,6 +1,4 @@
 function requireUser(req, res, next) {
-  console.log('entering reuqire user', req.user);
-
   if (!req.user) {
     next({
       name: 'MissingUser',

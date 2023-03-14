@@ -55,13 +55,6 @@ usersRouter.post('/register', async (req, res, next) => {
       });
     } else {
       const userTest = await getUserByUsernameWithPassword(username);
-      console.log(
-        'userTest',
-        userTest,
-        'username, password',
-        username,
-        password
-      );
       if (userTest) {
         next({ name: 'UserExist', message: 'User already exists' });
       } else {
@@ -76,8 +69,6 @@ usersRouter.post('/register', async (req, res, next) => {
             { id: user.id, username: user.username },
             process.env.JWT_SECRET
           );
-          console.log(token, 'token');
-          console.log(user, 'user message');
           res.send({ message: "You're logged in!", token, user });
         }
       }
@@ -89,8 +80,6 @@ usersRouter.post('/register', async (req, res, next) => {
 
 // GET /api/users/me
 usersRouter.get('/me', requireUser, async (req, res, next) => {
-  console.log('sending user', req.user);
-
   try {
     res.send(req.user);
   } catch ({ name, message }) {

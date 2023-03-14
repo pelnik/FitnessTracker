@@ -8,19 +8,12 @@ router.use(async (req, res, next) => {
   const prefix = 'Bearer ';
   const auth = req.header('Authorization');
 
-  console.log('entering get user info', auth);
-
   if (!auth) {
-    console.log('!auth');
     next();
   } else if (auth.startsWith(prefix)) {
-    console.log('prefix');
     const token = auth.slice(prefix.length);
-
-    console.log('token', token);
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
-      console.log('id', id);
 
       if (id) {
         req.user = await getUserById(id);
@@ -30,7 +23,6 @@ router.use(async (req, res, next) => {
       next({ message, name });
     }
   } else {
-    console.log('invalid');
     next({
       name: 'InvalidPrefix',
       message: 'Authorization must start with prefix',
@@ -62,6 +54,7 @@ const routineActivitiesRouter = require('./routineActivities');
 router.use('/routine_activities', routineActivitiesRouter);
 
 router.use((error, req, res, next) => {
+  res.status(400);
   res.send({
     name: error.name,
     message: error.message,

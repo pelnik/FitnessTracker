@@ -11,7 +11,6 @@ const bcrypt = require('bcrypt');
 async function createUser({ username, password }) {
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-  console.log(username, hashedPassword, 'test');
   try {
     const {
       rows: [user],
@@ -25,7 +24,6 @@ async function createUser({ username, password }) {
       [username, hashedPassword]
     );
 
-    console.log(user, 'message');
     return user;
   } catch (error) {
     console.error('error creating user');
@@ -35,7 +33,6 @@ async function createUser({ username, password }) {
 
 // this function should return a single user (object) from the database that matches the userName that is passed in as an argument.
 async function getUserByUsernameWithPassword(userName) {
-  console.log(' in db userName', userName);
   try {
     const {
       rows: [user],
@@ -47,8 +44,6 @@ async function getUserByUsernameWithPassword(userName) {
     `,
       [userName]
     );
-
-    console.log(' in db result', user);
 
     return user;
   } catch (error) {
