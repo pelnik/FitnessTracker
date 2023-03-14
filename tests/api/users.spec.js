@@ -142,7 +142,7 @@ describe('/api/users', () => {
     });
   });
 
-  xdescribe('GET /api/users/me', () => {
+  describe('GET /api/users/me', () => {
     it('sends back users data if valid token is supplied in header', async () => {
       const { data } = await axios.get(`${API_URL}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` },

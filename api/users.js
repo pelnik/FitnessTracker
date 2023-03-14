@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const usersRouter = express.Router();
 const { createUser, getUserByUsernameWithPassword, getUser } = require('../db');
+const { requireUser } = require('./utils.js');
 
 // POST /api/users/login
 usersRouter.post('/login', async (req, res, next) => {
@@ -52,25 +53,34 @@ usersRouter.post('/register', async (req, res, next) => {
         name: 'PasswordLengthError',
         message: 'Password has to be at least 8 characters',
       });
-    }
-
-    const userTest = await getUserByUsernameWithPassword(username);
-    if (userTest) {
-      next({ name: 'UserExist', message: 'User already exists' });
-    }
-    console.log('here', username, password);
-    const user = await createUser({ username, password });
-    console.log('here2', user);
-    if (!user) {
-      next({ name: 'UserCreationError', message: 'Problem with registering' });
     } else {
-      const token = jwt.sign(
-        { id: user.id, username: user.username },
-        process.env.JWT_SECRET
+      const userTest = await getUserByUsernameWithPassword(username);
+      console.log(
+        'userTest',
+        userTest,
+        'username, password',
+        username,
+        password
       );
-      console.log(token, 'token');
-      console.log(user, 'user message');
-      res.send({ message: "You're logged in!", token, user });
+      if (userTest) {
+        next({ name: 'UserExist', message: 'User already exists' });
+      } else {
+        const user = await createUser({ username, password });
+        if (!user) {
+          next({
+            name: 'UserCreationError',
+            message: 'Problem with registering',
+          });
+        } else {
+          const token = jwt.sign(
+            { id: user.id, username: user.username },
+            process.env.JWT_SECRET
+          );
+          console.log(token, 'token');
+          console.log(user, 'user message');
+          res.send({ message: "You're logged in!", token, user });
+        }
+      }
     }
   } catch ({ name, message }) {
     next({ name, message });
@@ -78,6 +88,18 @@ usersRouter.post('/register', async (req, res, next) => {
 });
 
 // GET /api/users/me
+usersRouter.get('/me', requireUser, async (req, res, next) => {
+  console.log('sending user', req.user);
+
+  try {
+    res.send(req.user);
+  } catch ({ name, message }) {
+    next({
+      name,
+      message,
+    });
+  }
+});
 
 // GET /api/users/:username/routines
 
