@@ -59,12 +59,13 @@ async function createTables() {
        CREATE TABLE routine_activities (
          id SERIAL PRIMARY KEY,
          "routineId" INTEGER REFERENCES routines(id),
-         "activityId" INTEGER REFERENCES routines(id),
+         "activityId" INTEGER REFERENCES activities(id),
          duration INTEGER,
          count INTEGER,
          UNIQUE("routineId","activityId")
        );
      `);
+     console.log('Finished building table')
   } catch (error) {
     console.error('Error creating tables');
     throw error;
@@ -88,7 +89,7 @@ async function createInitialUsers() {
     const users = await Promise.all(usersToCreate.map(createUser));
 
     console.log('Users created:');
-    console.log(users);
+    console.log(users,"!!!");
     console.log('Finished creating users!');
   } catch (error) {
     console.error('Error creating users!');
@@ -174,7 +175,7 @@ async function createInitialRoutineActivities() {
     await getRoutinesWithoutActivities();
   const [bicep1, bicep2, chest1, chest2, leg1, leg2, leg3] =
     await getAllActivities();
-
+console.log(bicep1, "bicep1")
   const routineActivitiesToCreate = [
     {
       routineId: bicepRoutine.id,
@@ -242,10 +243,10 @@ async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
-    // await createInitialUsers()
-    // await createInitialActivities()
-    // await createInitialRoutines()
-    // await createInitialRoutineActivities()
+    await createInitialUsers()
+    await createInitialActivities()
+    await createInitialRoutines()
+    await createInitialRoutineActivities()
   } catch (error) {
     console.log('Error during rebuildDB');
     throw error;

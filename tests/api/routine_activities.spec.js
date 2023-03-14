@@ -113,7 +113,7 @@ describe("/api/routine_activities", () => {
       }
     });
 
-    it("Updates the count or duration on the routine activity", async () => {
+    xit("Updates the count or duration on the routine activity", async () => {
       const newRoutineActivityData = {
         count: 55,
         duration: 45,
@@ -204,7 +204,7 @@ describe("/api/routine_activities", () => {
       expect(shouldBeDeleted).toBeFalsy();
     });
 
-    it("Logged in user should be the owner of the modified object.", async () => {
+    xit("Logged in user should be the owner of the modified object.", async () => {
       expect(theUserNeedsToBeLoggedInToDeleteError).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),

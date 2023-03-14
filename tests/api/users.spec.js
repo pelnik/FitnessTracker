@@ -53,12 +53,12 @@ describe("/api/users", () => {
         username: faker.internet.userName(),
         password: faker.internet.password(),
       };
-
+      console.log(fakeUserData,"fakeUserData")
       const { data } = await axios.post(
         `${API_URL}/api/users/register`,
         fakeUserData
       );
-
+        console.log(data, "data")
       expectNotToBeError(data);
 
       expect(data).toMatchObject({
@@ -109,7 +109,7 @@ describe("/api/users", () => {
       );
     });
 
-    xit("Throws errors for duplicate username", async () => {
+    it("Throws errors for duplicate username", async () => {
       let duplicateSuccess, duplicateErrResp;
       try {
         duplicateSuccess = await axios.post(
@@ -123,7 +123,7 @@ describe("/api/users", () => {
       expect(duplicateErrResp.data).toBeTruthy();
     });
 
-    xit("Throws errors for password-too-short.", async () => {
+    it("Throws errors for password-too-short.", async () => {
       expect(tooShortSuccess).toBeFalsy();
       expect(tooShortResponse.data).toBeTruthy();
     });
