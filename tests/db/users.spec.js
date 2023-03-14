@@ -17,7 +17,7 @@ const {
 
 describe('DB Users', () => {
   describe('createUser({ username, password })', () => {
-    xit('Creates the user', async () => {
+    it('Creates the user', async () => {
       const fakeUserData = {
         username: 'Horace',
         password: '12345678',
@@ -28,7 +28,7 @@ describe('DB Users', () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    xit('Does NOT return the password', async () => {
+    it('Does NOT return the password', async () => {
       const fakeUserData = {
         username: 'HoraceTheSecond',
         password: '12345678',
@@ -37,7 +37,7 @@ describe('DB Users', () => {
       expect(user.password).toBeFalsy();
     });
 
-    xit('EXTRA CREDIT: Does not store plaintext password in the database', async () => {
+    it('EXTRA CREDIT: Does not store plaintext password in the database', async () => {
       const fakeUserData = {
         username: 'Harry',
         password: 'superSecretPassword',
@@ -46,7 +46,7 @@ describe('DB Users', () => {
       expect(user.password).not.toBe(fakeUserData.password);
     });
 
-    xit('EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database', async () => {
+    it('EXTRA CREDIT: Hashes the password (salted 10 times) before storing it to the database', async () => {
       const fakeUserData = {
         username: 'Nicky',
         password: 'extraSuperSecretPassword',
@@ -72,7 +72,7 @@ describe('DB Users', () => {
   });
 
   describe('getUserByUsernameWithPassword(username)', () => {
-    xit('returns the user object if the username exists in the database', async () => {
+    it('returns the user object if the username exists in the database', async () => {
       const fakeUserData = {
         username: 'Bob',
         password: 'cvbnmjbgtr',
@@ -86,7 +86,7 @@ describe('DB Users', () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    xit('Does not return the user object if the username is not present in the database', async () => {
+    it('Does not return the user object if the username is not present in the database', async () => {
       const fakeUserData = {
         username: 'Pete',
         password: 'ertycvbnmkjhgfds',
@@ -101,7 +101,7 @@ describe('DB Users', () => {
   });
 
   describe('getUser({ username, password })', () => {
-    xit('returns the user when the password verifies', async () => {
+    it('returns the user when the password verifies', async () => {
       const fakeUserData = {
         username: 'Nicole',
         password: '6ygfe6ijbgtr',
@@ -114,7 +114,7 @@ describe('DB Users', () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    xit("Does not return the user if the password doesn't verify", async () => {
+    it("Does not return the user if the password doesn't verify", async () => {
       const fakeUserData = {
         username: 'Issac',
         password: 'ertyuiokjhgfds',
@@ -130,7 +130,7 @@ describe('DB Users', () => {
       expect(user).toBeFalsy();
     });
 
-    xit('Does NOT return the password', async () => {
+    it('Does NOT return the password', async () => {
       const fakeUserData = {
         username: 'Michael',
         password: 'jhtdxcvbnm',
@@ -142,7 +142,7 @@ describe('DB Users', () => {
   });
 
   describe('getUserById(userId)', () => {
-    xit('returns the user object where xit matches the passed in user id', async () => {
+    it('returns the user object where xit matches the passed in user id', async () => {
       const fakeUserData = {
         username: 'Sarah',
         password: 'poiuytfvbnm',
@@ -154,7 +154,7 @@ describe('DB Users', () => {
       expect(user.id).toBe(newUser.id);
     });
 
-    xit('does not return the password', async () => {
+    it('does not return the password', async () => {
       const fakeUserData = {
         username: 'Jonathan',
         password: 'wertyhjkkjh',
