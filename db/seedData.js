@@ -65,7 +65,7 @@ async function createTables() {
          UNIQUE("routineId","activityId")
        );
      `);
-     console.log('Finished building table')
+    console.log('Finished building table');
   } catch (error) {
     console.error('Error creating tables');
     throw error;
@@ -87,10 +87,6 @@ async function createInitialUsers() {
       { username: 'glamgal', password: 'glamgal123' },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
-
-    console.log('Users created:');
-    console.log(users,"!!!");
-    console.log('Finished creating users!');
   } catch (error) {
     console.error('Error creating users!');
     throw error;
@@ -175,7 +171,6 @@ async function createInitialRoutineActivities() {
     await getRoutinesWithoutActivities();
   const [bicep1, bicep2, chest1, chest2, leg1, leg2, leg3] =
     await getAllActivities();
-console.log(bicep1, "bicep1")
   const routineActivitiesToCreate = [
     {
       routineId: bicepRoutine.id,
@@ -243,10 +238,10 @@ async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
-    await createInitialUsers()
-    await createInitialActivities()
-    await createInitialRoutines()
-    await createInitialRoutineActivities()
+    await createInitialUsers();
+    await createInitialActivities();
+    await createInitialRoutines();
+    await createInitialRoutineActivities();
   } catch (error) {
     console.log('Error during rebuildDB');
     throw error;
