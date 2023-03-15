@@ -79,7 +79,7 @@ describe('/api/activities', () => {
   });
 
   describe('GET /api/activities', () => {
-    xit('Just returns a list of all activities in the database', async () => {
+    it('Just returns a list of all activities in the database', async () => {
       // Create a fake activity to watch for
       const curls = { name: 'curls', description: '4 sets of 15.' };
       const createdActivity = await createActivity(curls);
@@ -96,7 +96,7 @@ describe('/api/activities', () => {
     });
   });
 
-  xdescribe('GET /api/activities/:activityId/routines', () => {
+  describe('GET /api/activities/:activityId/routines', () => {
     beforeAll(async () => {
       try {
         await axios.get(`${API_URL}/api/activities/10000/routines`);
@@ -104,7 +104,7 @@ describe('/api/activities', () => {
         thisActivityDoesNotExistError = err.response.data;
       }
     });
-    xit('Get a list of all public routines which feature that activity', async () => {
+    it('Get a list of all public routines which feature that activity', async () => {
       const [testRoutine] = await getAllPublicRoutines();
       const [testActivity] = testRoutine.activities;
       const { data: routines } = await axios.get(
@@ -114,7 +114,7 @@ describe('/api/activities', () => {
       expect(routines).toEqual(routinesFromDB);
     });
 
-    xit('Should return an error when you ask for an activity that does not exist', async () => {
+    it('Should return an error when you ask for an activity that does not exist', async () => {
       expect(thisActivityDoesNotExistError).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),
@@ -122,7 +122,7 @@ describe('/api/activities', () => {
     });
   });
 
-  xdescribe('POST /api/activities', () => {
+  describe('POST /api/activities', () => {
     const activityToTestDuplicateErrorHandling = {
       name: 'pull ups are very useful',
       description: 'they take time and consistent effort to improve',
@@ -154,7 +154,7 @@ describe('/api/activities', () => {
       }
     });
 
-    xit('Creates a new activity', async () => {
+    it('Creates a new activity', async () => {
       const activityToCreateAndUpdate = {
         name: 'jump rope like a boxer',
         description: 'it is great cardio',
@@ -171,7 +171,7 @@ describe('/api/activities', () => {
       );
     });
 
-    xit('responds with an error when a activity already exists with the same name', async () => {
+    it('responds with an error when a activity already exists with the same name', async () => {
       expect(thisActivityAlreadyExists).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),
@@ -179,7 +179,7 @@ describe('/api/activities', () => {
     });
   });
 
-  xdescribe('PATCH /api/activities/:activityId', () => {
+  describe('PATCH /api/activities/:activityId', () => {
     let createdActivityToBePatched;
     let errorForWhenAnActivityDoesNotExist;
     let dataForActivityThatWillBeUsedToCheckTheErrorHandling;
@@ -250,7 +250,7 @@ describe('/api/activities', () => {
       }
     });
 
-    xit('Anyone can update an activity', async () => {
+    it('Anyone can update an activity', async () => {
       const newActivityData = {
         name: 'Double Bicep Curls',
         description: 'They hurt EVEN MORE, but you will thank you later',
@@ -266,14 +266,14 @@ describe('/api/activities', () => {
       );
     });
 
-    xit('returns an error when updating an activity that does not exist', async () => {
+    it('returns an error when updating an activity that does not exist', async () => {
       expect(errorForWhenAnActivityDoesNotExist).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),
       });
     });
 
-    xit('returns an error when changing an activity to have the name of an existing activity', async () => {
+    it('returns an error when changing an activity to have the name of an existing activity', async () => {
       expect(
         errorForWhenThePatchAttemptsToChangeTheNameToOneThatExists
       ).toMatchObject({
