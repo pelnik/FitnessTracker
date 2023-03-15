@@ -44,7 +44,7 @@ describe('/api/routines', () => {
   };
 
   const activityToCreate = {
-    name: 'dead lift',
+    name: 'dead lift2',
     description: 'perfect form is the goal',
   };
 
