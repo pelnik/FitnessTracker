@@ -26,7 +26,7 @@ describe("/api/unknown", () => {
     }
   });
  
-  xit("should return a 404",  (done) => {
+  it("should return a 404",  (done) => {
     expect(errorStatusFor404Error).toEqual(404);
     expect(typeof errorNameFor404Error).toEqual("string");
     expect(typeof errorMessageFor404Error).toEqual("string");

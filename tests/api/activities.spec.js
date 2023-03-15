@@ -19,7 +19,7 @@ const {
   getAllPublicRoutines,
 } = require('../../db');
 
-xdescribe('/api/activities', () => {
+describe('/api/activities', () => {
   let thisActivityDoesNotExistError;
   let thisActivityAlreadyExists;
   let token;

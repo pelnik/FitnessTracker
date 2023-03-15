@@ -53,6 +53,14 @@ router.use('/routines', routinesRouter);
 const routineActivitiesRouter = require('./routineActivities');
 router.use('/routine_activities', routineActivitiesRouter);
 
+router.use('*', (req, res, next) => {
+  res.status(404)
+  res.send({
+    name:'PathNotExist',
+    message: 'Path does not exist'
+  })
+})
+
 router.use((error, req, res, next) => {
   res.status(400);
   res.send({

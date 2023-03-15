@@ -23,7 +23,7 @@ const {
   getUserById,
 } = require('../../db');
 
-xdescribe('/api/users', () => {
+describe('/api/users', () => {
   let token, registeredUser;
   let newUser = { username: 'robert', password: 'bobbylong321' };
   let newUserShortPassword = { username: 'robertShort', password: 'bobby21' };
