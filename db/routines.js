@@ -1,5 +1,5 @@
-const { attachActivitiesToRoutines } = require("./activities");
-const client = require("./client");
+const { attachActivitiesToRoutines } = require('./activities');
+const client = require('./client');
 
 // *** addActivityToRoutine() from routine_activities.js needs
 // to be completed before you can pass the tests in this file.
@@ -24,7 +24,7 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
 
     return routine;
   } catch (error) {
-    console.error("error creating routine");
+    console.error('error creating routine');
     throw error;
   }
 }
@@ -45,7 +45,7 @@ async function getAllRoutines() {
 
     return attachedRows;
   } catch (error) {
-    console.error("error getting all routines");
+    console.error('error getting all routines');
     throw error;
   }
 }
@@ -66,7 +66,7 @@ async function getAllPublicRoutines() {
 
     return await attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error("error getting all public routines");
+    console.error('error getting all public routines');
     throw error;
   }
 }
@@ -85,7 +85,7 @@ async function getRoutineById(id) {
 
     return routine;
   } catch (error) {
-    console.error("error getting routine by id");
+    console.error('error getting routine by id');
     throw error;
   }
 }
@@ -100,7 +100,7 @@ async function getRoutinesWithoutActivities() {
 
     return rows;
   } catch (error) {
-    console.error("error getting routines without activities");
+    console.error('error getting routines without activities');
     throw error;
   }
 }
@@ -120,7 +120,7 @@ async function getAllRoutinesByUser({ username }) {
 
     return await attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error("error getting all routines by user");
+    console.error('error getting all routines by user');
     throw error;
   }
 }
@@ -138,7 +138,7 @@ async function getPublicRoutinesByUser({ username }) {
 
     return await attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error("error getting public routines by user");
+    console.error('error getting public routines by user');
     throw error;
   }
 }
@@ -159,7 +159,7 @@ async function getPublicRoutinesByActivity({ id }) {
     const attachedRows = await attachActivitiesToRoutines(rows);
     return attachedRows;
   } catch (error) {
-    console.error("error getting public routines by activity");
+    console.error('error getting public routines by activity');
     throw error;
   }
 }
@@ -172,7 +172,7 @@ async function updateRoutine(fields = {}) {
   delete fields.id;
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}" = $${index + 1}`)
-    .join(", ");
+    .join(', ');
 
   try {
     const {
@@ -189,7 +189,7 @@ async function updateRoutine(fields = {}) {
 
     return routine;
   } catch (error) {
-    console.error("error updating routine");
+    console.error('error updating routine');
     throw error;
   }
 }
@@ -209,7 +209,7 @@ async function destroyRoutine(id) {
       
     `);
   } catch (error) {
-    console.error("error deleting routine");
+    console.error('error deleting routine');
     throw error;
   }
 }
