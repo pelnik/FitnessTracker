@@ -4,10 +4,10 @@ DO NOT CHANGE THIS FILE
 
 */
 
-require("dotenv").config();
+require('dotenv').config();
 
-const axios = require("axios");
-const { SERVER_ADDRESS = "http://localhost:", PORT = 3000 } = process.env;
+const axios = require('axios');
+const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 
 const {
@@ -18,22 +18,22 @@ const {
   getAllPublicRoutines,
   getRoutineById,
   getAllRoutinesByUser,
-} = require("../../db");
+} = require('../../db');
 
-describe("/api/routines", () => {
+describe('/api/routines', () => {
   let theUserNeedsToBeLoggedInError;
   let token;
 
   const userToCreate = {
-    username: "Miranda",
-    password: "Firefly",
+    username: 'Miranda',
+    password: 'Firefly',
   };
 
   const routineToCreate = {
     creatorId: 0,
     isPublic: true,
-    name: "rock climbing",
-    goal: "lets climb the wall",
+    name: 'rock climbing',
+    goal: 'lets climb the wall',
   };
 
   const routineActivityToCreateAndUpdate = {
@@ -44,8 +44,8 @@ describe("/api/routines", () => {
   };
 
   const activityToCreate = {
-    name: "dead lift",
-    description: "perfect form is the goal",
+    name: 'dead lift',
+    description: 'perfect form is the goal',
   };
 
   beforeAll(async () => {
@@ -76,8 +76,8 @@ describe("/api/routines", () => {
       console.log(err);
     }
   });
-  describe("GET /api/routines", () => {
-    xit("Returns a list of public routines, includes the activities with them", async () => {
+  describe('GET /api/routines', () => {
+    it('Returns a list of public routines, includes the activities with them', async () => {
       const publicRoutinesFromDB = await getAllPublicRoutines();
 
       const { data: publicRoutinesFromAPI } = await axios.get(
@@ -87,14 +87,14 @@ describe("/api/routines", () => {
     });
   });
 
-  xdescribe("POST /api/routines", () => {
+  describe('POST /api/routines', () => {
     beforeAll(async () => {
       try {
         const newRoutineToCreate = {
           creatorId: 40000,
           isPublic: true,
-          name: "just another workout",
-          goal: "time to change it up",
+          name: 'just another workout',
+          goal: 'time to change it up',
         };
 
         await axios.post(`${API_URL}/api/routines`, newRoutineToCreate, {
@@ -105,12 +105,12 @@ describe("/api/routines", () => {
       }
     });
 
-    xit("Creates a new routine, with the creatorId matching the logged in user", async () => {
+    it('Creates a new routine, with the creatorId matching the logged in user', async () => {
       const newRoutineToCreate = {
         creatorId: 0,
         isPublic: true,
-        name: "workout like a boxer",
-        goal: "to be flow like a butterfly",
+        name: 'workout like a boxer',
+        goal: 'to be flow like a butterfly',
       };
 
       const { data: respondedRoutine } = await axios.post(
@@ -124,7 +124,7 @@ describe("/api/routines", () => {
       );
     });
 
-    xit("Requires logged in user", async () => {
+    it('Requires logged in user', async () => {
       expect(theUserNeedsToBeLoggedInError).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),
@@ -132,7 +132,7 @@ describe("/api/routines", () => {
     });
   });
 
-  xdescribe("PATCH /api/routines/:routineId", () => {
+  describe('PATCH /api/routines/:routineId', () => {
     let newRoutineForTesting;
     let errorForNotBeingAuthorized;
     let errorForTryingToEditARoutineThatIsNotYours;
@@ -143,8 +143,8 @@ describe("/api/routines", () => {
         const newRoutineToCreate = {
           creatorId: 40000,
           isPublic: true,
-          name: "lets go sprinting today",
-          goal: "to increase our need for speed",
+          name: 'lets go sprinting today',
+          goal: 'to increase our need for speed',
         };
 
         const { data } = await axios.post(
@@ -165,8 +165,8 @@ describe("/api/routines", () => {
       try {
         const dataForPatchingRoutine = {
           isPublic: false,
-          name: "running out of names",
-          goal: "go faster",
+          name: 'running out of names',
+          goal: 'go faster',
         };
 
         // this generates an error because we are not sending in a token. This error will be used in the below test for patch: "Requires logged in user"
@@ -186,8 +186,8 @@ describe("/api/routines", () => {
       try {
         //creating a second user
         const secondUserData = {
-          username: "Mal",
-          password: "Serenity",
+          username: 'Mal',
+          password: 'Serenity',
         };
         const secondUser = await createUser(secondUserData);
         let secondUserToken;
@@ -203,13 +203,13 @@ describe("/api/routines", () => {
         const newRoutineToCreate = {
           creatorId: secondUser.id,
           isPublic: true,
-          name: "exercises to help fly a space ship",
-          goal: "to fly a ship",
+          name: 'exercises to help fly a space ship',
+          goal: 'to fly a ship',
         };
 
         newDataForPatchingRoutine = {
-          name: "exercises to help fly a space ship better",
-          goal: "to fly a ship without crashing",
+          name: 'exercises to help fly a space ship better',
+          goal: 'to fly a ship without crashing',
         };
 
         // Create a routine so we can attempt to update it. Using the secondUserToken
@@ -232,12 +232,12 @@ describe("/api/routines", () => {
       }
     });
 
-    xit("Updates a routine, notably changing public/private, the name, and the goal", async () => {
+    it('Updates a routine, notably changing public/private, the name, and the goal', async () => {
       const newRoutineToCreate = {
         creatorId: 0,
         isPublic: true,
-        name: "back to basics",
-        goal: "body weight exercises",
+        name: 'back to basics',
+        goal: 'body weight exercises',
       };
 
       // Create a routine so we can update it.
@@ -249,8 +249,8 @@ describe("/api/routines", () => {
 
       const updateRoutineData = {
         isPublic: false,
-        name: "Every other day",
-        goal: "Until I lose 10 lbs.",
+        name: 'Every other day',
+        goal: 'Until I lose 10 lbs.',
       };
 
       const { data } = await axios.patch(
@@ -262,14 +262,14 @@ describe("/api/routines", () => {
       expect(data).toMatchObject(updateRoutineData);
     });
 
-    it("Requires logged in user", async () => {
+    it('Requires logged in user', async () => {
       expect(errorForNotBeingAuthorized).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),
       });
     });
 
-    it("returns a 403 when a user tries to edit a routine that is not theirs", async () => {
+    it('returns a 403 when a user tries to edit a routine that is not theirs', async () => {
       expect(errorForTryingToEditARoutineThatIsNotYours).toMatchObject({
         message: expect.any(String),
         name: expect.any(String),
@@ -277,15 +277,15 @@ describe("/api/routines", () => {
     });
   });
 
-  xdescribe("DELETE /api/routines/:routineId", () => {
+  describe('DELETE /api/routines/:routineId', () => {
     let errorForTryingToDeleteARoutineThatIsNotYours;
 
     beforeAll(async () => {
       try {
         //creating a second user
         const secondUserData = {
-          username: "Jane",
-          password: "Vera",
+          username: 'Jane',
+          password: 'Vera',
         };
         const secondUser = await createUser(secondUserData);
         let secondUserToken;
@@ -301,8 +301,8 @@ describe("/api/routines", () => {
         const newRoutineToCreate = {
           creatorId: secondUser.id,
           isPublic: true,
-          name: "working out on a space ship",
-          goal: "what happens if the ship rolls??",
+          name: 'working out on a space ship',
+          goal: 'what happens if the ship rolls??',
         };
 
         // Create a routine so we can attempt to update it. Using the secondUserToken
@@ -321,14 +321,14 @@ describe("/api/routines", () => {
       }
     });
 
-    it("Hard deletes a routine. Makes sure to delete all the routineActivities whose routine is the one being deleted.", async () => {
+    it('Hard deletes a routine. Makes sure to delete all the routineActivities whose routine is the one being deleted.', async () => {
       // Create a routine so we can delete it
 
       const newRoutineToCreateToBeDeleted = {
         creatorId: 0,
         isPublic: true,
-        name: "Modern Dance",
-        goal: "to learn to dance",
+        name: 'Modern Dance',
+        goal: 'to learn to dance',
       };
 
       const { data: respondedRoutine } = await axios.post(
@@ -357,7 +357,7 @@ describe("/api/routines", () => {
     });
   });
 
-  xdescribe("POST /api/routines/:routineId/activities", () => {
+  describe('POST /api/routines/:routineId/activities', () => {
     let routineActivityThatWeCreated;
     let firstUserRoutine;
     let errorForTryingToAddAnActivityToARoutineThatIsNotYours;
@@ -370,8 +370,8 @@ describe("/api/routines", () => {
 
         // create an activity data
         const newActivityToCreate = {
-          name: "figure skating",
-          description: "be graceful on the ice",
+          name: 'figure skating',
+          description: 'be graceful on the ice',
         };
 
         // create an activity in the database
@@ -420,13 +420,13 @@ describe("/api/routines", () => {
       }
     });
 
-    it("Attaches a single activity to a routine.", async () => {
+    it('Attaches a single activity to a routine.', async () => {
       const currentUserRoutines = await getAllRoutinesByUser(userToCreate);
       const firstUserRoutine = currentUserRoutines[0];
 
       const newActivityToCreate = {
-        name: "ice skating",
-        description: "be one with the ice",
+        name: 'ice skating',
+        description: 'be one with the ice',
       };
 
       const { data: newlyCreatedActivity } = await axios.post(
@@ -453,7 +453,7 @@ describe("/api/routines", () => {
       );
     });
 
-    it("Prevents duplication on (routineId, activityId) pair.", async () => {
+    it('Prevents duplication on (routineId, activityId) pair.', async () => {
       expect(
         errorForTryingToAddAnActivityToARoutineThatIsNotYours
       ).toMatchObject({
