@@ -7,6 +7,7 @@ const {
   getUser,
   getPublicRoutinesByUser,
   getUserById,
+  getAllRoutinesByUser,
 } = require('../db');
 const { requireUser } = require('./utils.js');
 
@@ -87,7 +88,14 @@ usersRouter.post('/register', async (req, res, next) => {
 // GET /api/users/me
 usersRouter.get('/me', requireUser, async (req, res, next) => {
   try {
-    res.send(req.user);
+    const sendUser = req.user;
+    const username = req.user.username;
+
+    const allRoutines = await getAllRoutinesByUser({ username });
+
+    sendUser.allMyRoutines = allRoutines;
+
+    res.send(sendUser);
   } catch ({ name, message }) {
     next({
       name,
