@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const {
   getAllActivities,
   getPublicRoutinesByActivity,
@@ -6,12 +6,12 @@ const {
   createActivity,
   updateActivity,
   getActivityByName,
-} = require("../db");
-const { requireUser } = require("./utils.js");
+} = require('../db');
+const { requireUser } = require('./utils.js');
 const activitiesRouter = express.Router();
 
 // GET /api/activities
-activitiesRouter.get("/", async (req, res, next) => {
+activitiesRouter.get('/', async (req, res, next) => {
   try {
     const allActivities = await getAllActivities();
 
@@ -22,7 +22,7 @@ activitiesRouter.get("/", async (req, res, next) => {
 });
 
 // GET /api/activities/:activityId/routines
-activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
+activitiesRouter.get('/:activityId/routines', async (req, res, next) => {
   const { activityId } = req.params;
   try {
     const id = Number(activityId);
@@ -30,7 +30,7 @@ activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
 
     if (!activity) {
       next({
-        name: "ActivityNotExist",
+        name: 'ActivityNotExist',
         message: "Activity doesn't exist",
       });
     } else {
@@ -44,15 +44,15 @@ activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
 });
 
 // POST /api/activities
-activitiesRouter.post("/", requireUser, async (req, res, next) => {
+activitiesRouter.post('/', requireUser, async (req, res, next) => {
   const { name, description } = req.body;
   try {
     const makeActivity = await createActivity({ name, description });
 
     if (!makeActivity) {
       next({
-        name: "ActivityAlreadyExist",
-        message: "This activity already exists",
+        name: 'ActivityAlreadyExist',
+        message: 'This activity already exists',
       });
     } else {
       res.send(makeActivity);
@@ -63,26 +63,29 @@ activitiesRouter.post("/", requireUser, async (req, res, next) => {
 });
 
 // PATCH /api/activities/:activityId
-activitiesRouter.patch("/:activityId", requireUser, async (req, res, next) => {
+activitiesRouter.patch('/:activityId', requireUser, async (req, res, next) => {
   const { activityId } = req.params;
   const id = Number(activityId);
   const { name, description } = req.body;
 
-  console.log("name", name, "description", description);
+  console.log('name', name, 'description', description);
   try {
     const activity = await getActivityById(id);
 
     if (!activity) {
       next({
-        name: "ActivityNotExist",
+        name: 'ActivityNotExist',
         message: "Activity doesn't exist",
       });
     } else {
       const activityName = await getActivityByName(name);
-      if (activityName) {
+
+      console.log('returned activity', activityName, 'returned id', id);
+
+      if (activityName && activityName.id !== id) {
         next({
-          name: "NameAlreadyExist",
-          message: "Name already exists",
+          name: 'NameAlreadyExist',
+          message: 'Name already exists',
         });
       } else {
         const activityUpdate = await updateActivity({ id, name, description });
